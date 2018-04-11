@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android Data Binding Example</string>
+    <string name="model_user_username_hint">Username</string>
+    <string name="model_user_password_hint">Password</string>
+    <string name="form_auth_button_register_hint">Need an account?</string>
+    <string name="form_auth_button_login_hint">Already has an account?</string>
+    <string name="form_auth_button_login">Login</string>
+    <string name="form_auth_button_register">Register</string>
+    <string name="model_user_password_confirmation_hint">Confirm your password</string>
+    <string name="activity_title_login_into_account">Login into Account</string>
+    <string name="activity_title_register_new_account">Create an Account</string>
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="isFormValidated" type="Boolean" />
+        <variable name="isFormSubmitting" type="Boolean" />
+        <variable name="isRegisterationState" type="Boolean" />
+        <variable name="formErrorMessage" type="String" />
+        <variable name="presenter" type="com.dinophan.authapp.ui.activities.MainActivity.Presenter" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/appContainerPadding">
+        <TextView
+            android:text="@{safeUnbox(isRegisterationState) ? @string/activity_title_register_new_account : @string/activity_title_login_into_account}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+            android:layout_marginBottom="@dimen/formControlMargin"
+            android:layout_marginTop="@dimen/formControlMargin"
+            android:paddingTop="@dimen/formInputMargin"
+            android:paddingBottom="@dimen/formControlMargin"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <android.support.design.widget.TextInputLayout
+            android:hint="@string/model_user_username_hint"
+            android:enabled="@{safeUnbox(isFormSubmitting) == false}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:onTextChanged="@{presenter::onUsernameChanged}"
+                android:inputType="text|textNoSuggestions"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:hint="@string/model_user_password_hint"
+            android:enabled="@{safeUnbox(isFormSubmitting) == false}"
+            android:layout_marginTop="@dimen/formInputMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:onTextChanged="@{presenter::onPasswordChanged}"
+                android:inputType="text|textPassword"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:hint="@string/model_user_password_confirmation_hint"
+            android:enabled="@{safeUnbox(isFormSubmitting) == false}"
+            android:visibility="@{safeUnbox(isRegisterationState) == true ? View.VISIBLE : View.GONE}"
+            android:layout_marginTop="@dimen/formInputMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:onTextChanged="@{presenter::onConfirmationPasswordChanged}"
+                android:inputType="text|textPassword"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:text="@{formErrorMessage}"
+            android:visibility="@{(formErrorMessage != null &amp;&amp; safeUnbox(isFormSubmitting) == false) ? View.VISIBLE : View.GONE}"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent"
+            android:paddingStart="@dimen/formInputMargin"
+            android:paddingEnd="@dimen/formInputMargin"
+            android:paddingTop="@dimen/formControlMargin"
+            android:paddingBottom="@dimen/formControlMargin"
+            android:layout_marginTop="@dimen/formControlMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/formControlMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="@{safeUnbox(isRegisterationState) ? @string/form_auth_button_login_hint : @string/form_auth_button_register_hint }"
+                android:enabled="@{safeUnbox(isFormSubmitting) == false}"
+                android:onClick="@{presenter::onToggleRegisterationState}"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+            <Button
+                android:text="@{safeUnbox(isRegisterationState) ? @string/form_auth_button_register : @string/form_auth_button_login}"
+                android:enabled="@{safeUnbox(isFormSubmitting) == false &amp;&amp; safeUnbox(isFormValidated) == true}"
+                android:onClick="@{presenter::onFormSubmit}"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
